@@ -1,0 +1,7 @@
+Question: how does Nodejs handle child threads?
+
+Javascript and NodeJS are single-threaded before Node 13. NodeJS introduces worker threads using the worker_threads module. Worker threads share the same memory space with the main thread and are best used for CPU-intensive operations. After all, asynchronous I-O is done best using the built-in functions that utilise callbacks. 
+
+After importing the appropriate module with a require("worker-threads"), one can spawn a new worker thread with a "new Worker()" call including the file path for the executable nodejs that the thread will run off. 
+
+Communication between threads happens with messages and asynchronously, as per the "NodeJS way" of absolutely avoiding blocking statements as much as possible. Messages are sent with a simple postMessage() call on the target thread which receives an event and will assign listeners to respond to the message. Child threads can communicate with each other.
